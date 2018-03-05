@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"io"
 	"log"
 	"net"
 	"os"
@@ -10,7 +11,7 @@ import (
 	"github.com/songgao/water"
 )
 
-func recv(conn0 net.Conn, toTAP chan []byte) {
+func recv(conn0 io.Reader, toTAP chan []byte) {
 	var remaining []byte = make([]byte, 0)
 	b := make([]byte, 10000)
 	lenb := 0
@@ -91,7 +92,7 @@ func doClient(dest string, toTAP chan []byte, fromTAP chan []byte) {
 	}
 }
 
-func encodeAndSend(conn net.Conn, fromTAP chan []byte) {
+func encodeAndSend(conn io.Writer, fromTAP chan []byte) {
 	for b := range fromTAP {
 		conn.Write(lenBytes(len(b)))
 		conn.Write(b)
