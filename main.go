@@ -98,11 +98,11 @@ func encodeAndSend(conn net.Conn, fromTAP chan []byte) {
 	}
 }
 
-func startTAP(tapName string) *water.Interface {
+func startTAP(tapName string, persist bool) *water.Interface {
 	config := water.Config{
 		PlatformSpecificParams: water.PlatformSpecificParams{
 			Name: tapName,
-			Persist: true,
+			Persist: persist,
 		},
 		DeviceType: water.TAP,
 	}
@@ -142,7 +142,7 @@ func main() {
 
 	toTAP := make(chan []byte)
 	fromTAP := make(chan []byte)
-	ifce := startTAP(tapName)
+	ifce := startTAP(tapName, true)
 	go sendToTAP(ifce, toTAP)
 	go readFromTAP(ifce, fromTAP)
 	if listenAddr != "" {
