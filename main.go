@@ -11,8 +11,8 @@ func startTAP(tapName string, persist bool) *water.Interface {
 	config := water.Config{
 		DeviceType: water.TAP,
 	}
-        config.Name = tapName
-        config.Persist = persist
+	config.Name = tapName
+	config.Persist = persist
 	ifce, err := water.New(config)
 	if err != nil {
 		panic(err)

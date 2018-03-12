@@ -21,14 +21,14 @@ func recv(conn io.Reader, toTAP chan []byte) {
 		s := 0
 		for s < n {
 			if lenb == 0 {
-				lenb = bytesLen(b[s:s+2])
+				lenb = bytesLen(b[s : s+2])
 				s += 2
 				continue
 			}
-			if s + lenb <= n {
+			if s+lenb <= n {
 				var packet []byte
 				if len(remaining) == 0 {
-					packet = b[s:s+lenb]
+					packet = b[s : s+lenb]
 				} else {
 					packet = append(remaining, b[s:s+lenb]...)
 					remaining = make([]byte, 0)
